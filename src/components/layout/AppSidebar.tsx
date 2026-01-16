@@ -46,14 +46,14 @@ const NavItem = ({ to, icon, label, collapsed, badge }: NavItemProps) => {
     >
       <span className={cn(
         "flex-shrink-0 transition-colors",
-        isActive ? "text-primary" : "text-sidebar-foreground group-hover:text-foreground"
+        isActive ? "text-primary" : "text-slate-600 group-hover:text-slate-900"
       )}>
         {icon}
       </span>
       {!collapsed && (
         <span className={cn(
           "text-sm font-medium transition-colors",
-          isActive ? "text-foreground" : "text-sidebar-foreground group-hover:text-foreground"
+          isActive ? "text-slate-900" : "text-slate-600 group-hover:text-slate-900"
         )}>
           {label}
         </span>
@@ -97,7 +97,7 @@ interface NavGroupProps {
 const NavGroup = ({ title, children, collapsed }: NavGroupProps) => (
   <div className="space-y-1">
     {!collapsed && (
-      <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+      <h3 className="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
         {title}
       </h3>
     )}
@@ -111,7 +111,7 @@ export function AppSidebar() {
   return (
     <aside
       className={cn(
-        "h-screen bg-sidebar border-r border-sidebar-border flex flex-col transition-all duration-300",
+        "h-screen bg-white border-r border-sidebar-border flex flex-col transition-all duration-300 shadow-sm",
         collapsed ? "w-16" : "w-64"
       )}
     >
@@ -123,8 +123,8 @@ export function AppSidebar() {
           </div>
           {!collapsed && (
             <div>
-              <h1 className="text-lg font-semibold text-foreground">LogWatch</h1>
-              <p className="text-xs text-muted-foreground">Enterprise Edition</p>
+              <h1 className="text-lg font-semibold text-slate-900">LogWatch</h1>
+              <p className="text-xs text-slate-500">Enterprise Edition</p>
             </div>
           )}
         </div>
@@ -154,10 +154,10 @@ export function AppSidebar() {
       </nav>
 
       {/* Collapse Toggle */}
-      <div className="p-3 border-t border-sidebar-border">
+      <div className="p-3 border-t border-slate-200">
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="w-full flex items-center justify-center py-2 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground hover:text-foreground"
+          className="w-full flex items-center justify-center py-2 rounded-lg hover:bg-slate-100 transition-colors text-slate-500 hover:text-slate-700"
         >
           {collapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
         </button>
