@@ -12,9 +12,12 @@ import {
   Key,
   ChevronLeft,
   ChevronRight,
-  Activity,
-  HardDrive,
-  FolderOpen,
+  RefreshCw,
+  Layers,
+  Plug,
+  UserCircle,
+  History,
+  Crown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -22,6 +25,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface NavItemProps {
   to: string;
@@ -107,6 +111,7 @@ const NavGroup = ({ title, children, collapsed }: NavGroupProps) => (
 
 export function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const { isSuperAdmin } = useAuth();
 
   return (
     <aside
@@ -123,8 +128,8 @@ export function AppSidebar() {
           </div>
           {!collapsed && (
             <div>
-              <h1 className="text-lg font-semibold text-slate-900">LogWatch</h1>
-              <p className="text-xs text-slate-500">Enterprise Edition</p>
+              <h1 className="text-lg font-semibold text-slate-900">Actonix</h1>
+              <p className="text-xs text-slate-500">Enterprise Audit</p>
             </div>
           )}
         </div>
@@ -133,24 +138,32 @@ export function AppSidebar() {
       {/* Navigation */}
       <nav className="flex-1 p-3 space-y-6 overflow-y-auto">
         <NavGroup title="Main" collapsed={collapsed}>
-          <NavItem to="/" icon={<LayoutDashboard className="w-5 h-5" />} label="Dashboard" collapsed={collapsed} />
-          <NavItem to="/search" icon={<Search className="w-5 h-5" />} label="Smart Search" collapsed={collapsed} />
-          <NavItem to="/reports" icon={<FileText className="w-5 h-5" />} label="Saved Reports" collapsed={collapsed} />
+          <NavItem to="/" icon={<LayoutDashboard className="w-5 h-5" />} label="Home" collapsed={collapsed} />
+          <NavItem to="/change" icon={<RefreshCw className="w-5 h-5" />} label="Change" collapsed={collapsed} />
+          <NavItem to="/search" icon={<Search className="w-5 h-5" />} label="Search" collapsed={collapsed} />
           <NavItem to="/alerts" icon={<Bell className="w-5 h-5" />} label="Alerts" collapsed={collapsed} badge={5} />
+          <NavItem to="/reports" icon={<FileText className="w-5 h-5" />} label="Reports" collapsed={collapsed} />
         </NavGroup>
 
-        <NavGroup title="Data Sources" collapsed={collapsed}>
-          <NavItem to="/dashboard/workstations" icon={<HardDrive className="w-5 h-5" />} label="Workstations" collapsed={collapsed} />
-          <NavItem to="/dashboard/files" icon={<FolderOpen className="w-5 h-5" />} label="File & Folders" collapsed={collapsed} />
-          <NavItem to="/dashboard/activity" icon={<Activity className="w-5 h-5" />} label="Activity Logs" collapsed={collapsed} />
+        <NavGroup title="Configuration" collapsed={collapsed}>
+          <NavItem to="/scope-manager" icon={<Layers className="w-5 h-5" />} label="ScopeMgr" collapsed={collapsed} />
+          <NavItem to="/integration" icon={<Plug className="w-5 h-5" />} label="Integration" collapsed={collapsed} />
+          <NavItem to="/settings" icon={<Settings className="w-5 h-5" />} label="Setting" collapsed={collapsed} />
         </NavGroup>
 
-        <NavGroup title="Administration" collapsed={collapsed}>
-          <NavItem to="/tenants" icon={<Users className="w-5 h-5" />} label="Tenants" collapsed={collapsed} />
-          <NavItem to="/api-keys" icon={<Key className="w-5 h-5" />} label="API Keys" collapsed={collapsed} />
-          <NavItem to="/mappings" icon={<Database className="w-5 h-5" />} label="Field Mappings" collapsed={collapsed} />
-          <NavItem to="/settings" icon={<Settings className="w-5 h-5" />} label="Settings" collapsed={collapsed} />
+        <NavGroup title="Account" collapsed={collapsed}>
+          <NavItem to="/profile" icon={<UserCircle className="w-5 h-5" />} label="User Profile" collapsed={collapsed} />
+          <NavItem to="/audit-trail" icon={<History className="w-5 h-5" />} label="Self Audit Trail" collapsed={collapsed} />
         </NavGroup>
+
+        {isSuperAdmin && (
+          <NavGroup title="Super Admin" collapsed={collapsed}>
+            <NavItem to="/admin" icon={<Crown className="w-5 h-5" />} label="Dashboard" collapsed={collapsed} />
+            <NavItem to="/admin/schema" icon={<Database className="w-5 h-5" />} label="Schema Manager" collapsed={collapsed} />
+            <NavItem to="/admin/mapper" icon={<Key className="w-5 h-5" />} label="Schema Mapper" collapsed={collapsed} />
+            <NavItem to="/tenants" icon={<Users className="w-5 h-5" />} label="Tenants" collapsed={collapsed} />
+          </NavGroup>
+        )}
       </nav>
 
       {/* Collapse Toggle */}

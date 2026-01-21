@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { MainLayout } from "@/components/layout/MainLayout";
@@ -15,6 +15,11 @@ import Tenants from "./pages/Tenants";
 import ApiKeys from "./pages/ApiKeys";
 import FieldMappings from "./pages/FieldMappings";
 import SettingsPage from "./pages/Settings";
+import Change from "./pages/Change";
+import ScopeMgr from "./pages/ScopeMgr";
+import IntegrationPage from "./pages/Integration";
+import UserProfile from "./pages/UserProfile";
+import SelfAuditTrail from "./pages/SelfAuditTrail";
 import SuperAdminDashboard from "./pages/admin/SuperAdminDashboard";
 import CanonicalSchemaManager from "./pages/admin/CanonicalSchemaManager";
 import SchemaMapper from "./pages/admin/SchemaMapper";
@@ -36,14 +41,26 @@ const App = () => (
             
             {/* Protected routes */}
             <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
+              {/* Main */}
               <Route path="/" element={<Dashboard />} />
+              <Route path="/change" element={<Change />} />
               <Route path="/search" element={<SmartSearch />} />
-              <Route path="/reports" element={<Reports />} />
               <Route path="/alerts" element={<Alerts />} />
+              <Route path="/reports" element={<Reports />} />
+              
+              {/* Configuration */}
+              <Route path="/scope-manager" element={<ScopeMgr />} />
+              <Route path="/integration" element={<IntegrationPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              
+              {/* Account */}
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/audit-trail" element={<SelfAuditTrail />} />
+              
+              {/* Admin */}
               <Route path="/tenants" element={<Tenants />} />
               <Route path="/api-keys" element={<ApiKeys />} />
               <Route path="/mappings" element={<FieldMappings />} />
-              <Route path="/settings" element={<SettingsPage />} />
               
               {/* Super Admin routes */}
               <Route path="/admin" element={<SuperAdminDashboard />} />
